@@ -8,7 +8,7 @@ class Font
 public:
 	Font();
 	Font(std::string path, int size);
-	void Draw(std::string text,float x, float y);
+	
 	~Font();
 	
 	ALLEGRO_FONT* font;

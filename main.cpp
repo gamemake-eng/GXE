@@ -1,4 +1,4 @@
-
+#define SOL_ALL_SAFETIES_ON 1
 #include <stdio.h>
 #include <string>
 #include <vector>
@@ -9,7 +9,12 @@
 #include "engine/Graphics.h"
 #include "engine/Color.h"
 #include "engine/Font.h"
+#include "engine/Transform.h"
+#include "engine/Keyboard.h"
+#include "engine/Rect.h"
+#include "engine/Image.h"
 #include <fstream>
+#include <assert.h>
 
 inline bool exists_test (const std::string& name) {
     std::ifstream f(name.c_str());
@@ -28,7 +33,23 @@ int main(int argc, char* args[])
     lua.open_libraries(sol::lib::base, sol::lib::coroutine, sol::lib::string, sol::lib::io, sol::lib::math, sol::lib::table, sol::lib::debug);   
     lua.new_usertype<Graphics>("GXE_Graphics",
         //TODO: Make sprite and geometric drawing (should be easy *foreshadowing maybe*)
-        "ClearScreen", &Graphics::clearScreen
+        "ClearScreen", &Graphics::clearScreen,
+        "DrawCircle", &Graphics::drawCircle,
+        "DrawRect", &Graphics::drawRect,
+        //Holy ducking sit i could of just passed a refrence to the font object this whole time!?!?
+        "DrawText", &Graphics::drawText,
+
+        "DrawImage", &Graphics::drawImage,
+        "DrawCropImage", &Graphics::drawCropImage,
+
+        "PauseDraw", &Graphics::pauseDraw
+    );
+    lua.new_usertype<Transform>("GXE_Transform",
+        sol::constructors<Transform()>(),
+        "Push", &Transform::pushTrans,
+        "Pop", &Transform::popTrans,
+        "Translate", &Transform::translate,
+        "Scale", &Transform::scale
     );
     lua.new_usertype<Color>("GXE_Color",
         sol::constructors<Color(float,float,float,float)>(),
@@ -42,9 +63,27 @@ int main(int argc, char* args[])
         "ReallyGreen",   sol::var(Color::ReallyGreen)
     );
     lua.new_usertype<Font>("GXE_Font",
-        //kinda inconsistent as every other drawing function is in the GXE_Graphics class but it works 
-        sol::constructors<Font(),Font(std::string,int)>(),
-        "DrawText", &Font::Draw
+        sol::constructors<Font(),Font(std::string,int)>()
+    );
+    lua.new_usertype<Image>("GXE_Image",
+        sol::constructors<Image(std::string)>()
+    );
+    lua.new_usertype<Rect>("GXE_Rect",
+        sol::constructors<Rect(float, float, float, float),Rect(float, float)>(),
+        "x", &Rect::x,
+        "y", &Rect::y,
+        "w", &Rect::w,
+        "h", &Rect::h,
+        "CheckAABB", &Rect::checkCollision
+    );
+    lua.new_usertype<Keyboard>("GXE_Input",
+        "KeyDown", &Keyboard::isKeyDown,
+        "KeyJustPress", &Keyboard::isKeyJustPress,
+        //Key constants
+        "KEY_UP", sol::var(Keyboard::KEY_UP),
+        "KEY_DOWN", sol::var(Keyboard::KEY_DOWN),
+        "KEY_LEFT", sol::var(Keyboard::KEY_LEFT),
+        "KEY_RIGHT", sol::var(Keyboard::KEY_RIGHT)
     );
     if (!(args[1] == NULL))
     {
@@ -53,7 +92,14 @@ int main(int argc, char* args[])
         {   
             if (exists_test(fn))
             {
-                lua.script_file(fn);
+                auto res = lua.script_file(fn,[](lua_State*, sol::protected_function_result pfr) {
+                    // pfr will contain things that went wrong, for either loading or executing the script
+                    // Can throw your own custom error
+                    // You can also just return it, and let the call-site handle the error if necessary.
+                    return pfr;
+                });
+
+                assert(res.valid());
             }else
             {
                 printf("\nfile does not exist");
@@ -68,7 +114,25 @@ int main(int argc, char* args[])
         
     }else
     {
-        return 0;
+        std::string fn = "main.lua";
+        
+            if (exists_test(fn))
+            {
+                auto res = lua.script_file(fn,[](lua_State*, sol::protected_function_result pfr) {
+                    // pfr will contain things that went wrong, for either loading or executing the script
+                    // Can throw your own custom error
+                    // You can also just return it, and let the call-site handle the error if necessary.
+
+                    return pfr;
+                });
+
+                assert(res.valid());
+
+            }else
+            {
+                printf("\nfile does not exist");
+                return 0;
+            }
     }
     
 
@@ -150,6 +214,15 @@ int main(int argc, char* args[])
             deltaTime = currentTime - lastUpdate;
             lastUpdate = currentTime;
             
+            break;
+        case ALLEGRO_EVENT_KEY_DOWN:
+
+            Keyboard::keys[event.keyboard.keycode] = true;
+            break;
+        case ALLEGRO_EVENT_KEY_UP:
+
+            Keyboard::keys[event.keyboard.keycode] = false;
+
             break;
         case ALLEGRO_EVENT_DISPLAY_CLOSE:
             done = true;
