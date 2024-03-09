@@ -4,11 +4,16 @@ config = {
 	title = "Game engine maybe lol"
 }
 txt = {}
-str = "hello there"
 
+function script_path()
+   local str = debug.getinfo(2, "S").source:sub(2)
+   return str:match("(.*/)")
+end
+str = "Hello there! Welcome to GXE!"
 function init( )
 	font = GXE_Font.new("lazy.ttf", 20)
 	font2 = GXE_Font.new("lovedays.ttf", 20)
+	font3 = GXE_Font.new()
 	d = 0
 	
 	x = 0
@@ -42,11 +47,12 @@ function update(dt)
 
 end
 function draw( )
-	GXE_Graphics.ClearScreen(GXE_Color.MonogameBlue.r,GXE_Color.MonogameBlue.g,GXE_Color.MonogameBlue.b);
+	GXE_Graphics.ClearScreen(GXE_Color.MonogameBlue);
 
 	for k,v in pairs(txt) do
 		font:DrawText(v.char, v.x, v.y);
 		font2:DrawText(v.char, v.x, v.y+30);
+		font3:DrawText(v.char, v.x, v.y+60);
 	end
 
 

@@ -9,6 +9,13 @@
 #include "engine/Graphics.h"
 #include "engine/Color.h"
 #include "engine/Font.h"
+#include <fstream>
+
+inline bool exists_test (const std::string& name) {
+    std::ifstream f(name.c_str());
+    return f.good();
+}
+
 int main(int argc, char* args[])
 {
     float currentTime = 0;
@@ -18,7 +25,7 @@ int main(int argc, char* args[])
     int height = 480;
     std::string title = "GXE JellyFish";
     sol::state lua;
-    lua.open_libraries(sol::lib::base, sol::lib::coroutine, sol::lib::string, sol::lib::io, sol::lib::math, sol::lib::table);   
+    lua.open_libraries(sol::lib::base, sol::lib::coroutine, sol::lib::string, sol::lib::io, sol::lib::math, sol::lib::table, sol::lib::debug);   
     lua.new_usertype<Graphics>("GXE_Graphics",
         //TODO: Make sprite and geometric drawing (should be easy *foreshadowing maybe*)
         "ClearScreen", &Graphics::clearScreen
@@ -39,22 +46,47 @@ int main(int argc, char* args[])
         sol::constructors<Font(),Font(std::string,int)>(),
         "DrawText", &Font::Draw
     );
+    if (!(args[1] == NULL))
+    {
+        std::string fn = args[1];
+        if(fn.substr(fn.find_last_of(".") + 1) == "lua")
+        {   
+            if (exists_test(fn))
+            {
+                lua.script_file(fn);
+            }else
+            {
+                printf("\nfile does not exist");
+                return 0;
+            }
+            
+        }else
+        {
+            printf("\nNot a lua file (should have .lua extention)");
+            return 0;
+        }
+        
+    }else
+    {
+        return 0;
+    }
+    
 
-    lua.script_file("main.lua");
+    //lua.script_file("main.lua");
 
     sol::optional<float> widthDef = lua["config"]["width"];
     sol::optional<float> heightDef = lua["config"]["height"];
     sol::optional<std::string> titleDef = lua["config"]["title"];
     if(widthDef == sol::nullopt)
     {
-        printf("No width specified... using default");
+        printf("\nNo width specified... using default");
     }else
     {
         width = lua["config"]["width"];
     }
     if(heightDef == sol::nullopt)
     {
-        printf("No height specified... using default");
+        printf("\nNo height specified... using default");
         
     }else
     {
@@ -63,7 +95,7 @@ int main(int argc, char* args[])
 
     if(titleDef == sol::nullopt)
     {
-        printf("No title specified... using default");
+        printf("\nNo title specified... using default");
         
     }else
     {
@@ -77,7 +109,7 @@ int main(int argc, char* args[])
     sol::optional<sol::function> initDef = lua["init"];
     if(initDef == sol::nullopt)
     {
-        printf("No init function... closing");
+        printf("\nNo init function... closing");
         return 0;
 
     }
@@ -87,7 +119,7 @@ int main(int argc, char* args[])
     sol::optional<sol::function> updateDef = lua["update"];
     if(updateDef == sol::nullopt)
     {
-        printf("No update function... closing");
+        printf("\nNo update function... closing");
         
         return 0;
 
@@ -95,7 +127,7 @@ int main(int argc, char* args[])
     sol::optional<sol::function> drawDef = lua["draw"];
     if(drawDef == sol::nullopt)
     {
-        printf("No draw function... closing");
+        printf("\nNo draw function... closing");
         
         return 0;
 

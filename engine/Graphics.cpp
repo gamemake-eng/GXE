@@ -5,7 +5,7 @@
 Graphics::Graphics()
 {}
 
-void Graphics::clearScreen(float r, float g, float b )
+void Graphics::clearScreen(Color &color)
 {
-	al_clear_to_color(al_map_rgb(r,g,b));
+	al_clear_to_color(al_map_rgba(color.r,color.g,color.b,color.a));
 }
