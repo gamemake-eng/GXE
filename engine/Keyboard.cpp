@@ -5,6 +5,9 @@ const int Keyboard::KEY_UP = ALLEGRO_KEY_UP;
 const int Keyboard::KEY_DOWN = ALLEGRO_KEY_DOWN;
 const int Keyboard::KEY_LEFT = ALLEGRO_KEY_LEFT;
 const int Keyboard::KEY_RIGHT = ALLEGRO_KEY_RIGHT;
+
+Rect Keyboard::mouse = Rect(0,0);
+
 Keyboard::Keyboard()
 {}
 

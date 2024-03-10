@@ -17,7 +17,7 @@ public:
 	static void drawText(std::string text,float x, float y, Color &color, Font &font);
 
 	static void drawImage(Image &img, float x, float y);
-	static void drawCropImage(Image &img, Rect &source, float x, float y);
+	static void drawRotatedImage(Image &img, float angle, Rect &origin, float x, float y);
 
 	static void pauseDraw(bool pause);
 

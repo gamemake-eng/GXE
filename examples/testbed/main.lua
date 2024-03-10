@@ -23,6 +23,7 @@ function init( )
 	font3 = GXE_Font.new()
 
 	img = GXE_Image.new("dude.png")
+	img.crop.w = 30
 
 	rect1 = GXE_Rect.new(0,0,20,20)
 	rect2 = GXE_Rect.new(30,30,20,20)
@@ -89,14 +90,25 @@ function update(dt)
 	--cam.zoom = cam.zoom - 0.01
 
 end
+a = 0
 function draw( )
+	a = a + 0.01
 	GXE_Graphics.ClearScreen(GXE_Color.MonogameBlue)
 
 	camTrans:Push()
 	camTrans:Translate(cam.x, cam.y)
 	camTrans:Scale(cam.zoom, cam.zoom)
 	local crop = GXE_Rect.new(0,0,30,30)
-	GXE_Graphics.DrawCropImage(img,crop,0,0)
+
+
+	GXE_Graphics.PauseDraw(true)
+	for i=1,10 do
+
+		GXE_Graphics.DrawRotatedImage(img,a,GXE_Rect.new(img.crop.w/2,img.crop.h/2),GXE_Input.mouse.x,GXE_Input.mouse.y-i)
+
+	end
+	GXE_Graphics.PauseDraw(false)
+
 	if GXE_Rect.CheckAABB(rect1, rect2) then
 		GXE_Graphics.DrawRect(rect1, GXE_Color.ReallyGreen)
 		if rect1.x > rect2.x+rect2.w then
@@ -119,6 +131,7 @@ function draw( )
 		GXE_Graphics.DrawText(v.char, v.x, v.y+60,GXE_Color.ReallyGreen, font3)
 	end
 	GXE_Graphics.PauseDraw(false)
+
 	camTrans:Pop()
 	GXE_Graphics.DrawText("Score: U ", 0, 0,GXE_Color.ReallyGreen, font2)
 

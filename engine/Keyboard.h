@@ -1,4 +1,5 @@
 #include <allegro5/allegro.h>
+#include "Rect.h"
 #pragma once
 
 class Keyboard
@@ -10,6 +11,10 @@ public:
 	static const int KEY_DOWN;
 	static const int KEY_LEFT;
 	static const int KEY_RIGHT;
+
+	static Rect mouse;
+	
+
 	static bool isKeyDown(int code);
 	static bool isKeyJustPress(int code);
 private:

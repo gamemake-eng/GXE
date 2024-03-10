@@ -15,6 +15,7 @@
 #include "engine/Image.h"
 #include <fstream>
 #include <assert.h>
+#include <iostream>
 
 inline bool exists_test (const std::string& name) {
     std::ifstream f(name.c_str());
@@ -40,7 +41,7 @@ int main(int argc, char* args[])
         "DrawText", &Graphics::drawText,
 
         "DrawImage", &Graphics::drawImage,
-        "DrawCropImage", &Graphics::drawCropImage,
+        "DrawRotatedImage", &Graphics::drawRotatedImage,
 
         "PauseDraw", &Graphics::pauseDraw
     );
@@ -66,7 +67,9 @@ int main(int argc, char* args[])
         sol::constructors<Font(),Font(std::string,int)>()
     );
     lua.new_usertype<Image>("GXE_Image",
-        sol::constructors<Image(std::string)>()
+        sol::constructors<Image(std::string)>(),
+        "crop", &Image::crop,
+        "source", &Image::source
     );
     lua.new_usertype<Rect>("GXE_Rect",
         sol::constructors<Rect(float, float, float, float),Rect(float, float)>(),
@@ -79,6 +82,7 @@ int main(int argc, char* args[])
     lua.new_usertype<Keyboard>("GXE_Input",
         "KeyDown", &Keyboard::isKeyDown,
         "KeyJustPress", &Keyboard::isKeyJustPress,
+        "mouse", sol::var(Keyboard::mouse),
         //Key constants
         "KEY_UP", sol::var(Keyboard::KEY_UP),
         "KEY_DOWN", sol::var(Keyboard::KEY_DOWN),
@@ -93,9 +97,8 @@ int main(int argc, char* args[])
             if (exists_test(fn))
             {
                 auto res = lua.script_file(fn,[](lua_State*, sol::protected_function_result pfr) {
-                    // pfr will contain things that went wrong, for either loading or executing the script
-                    // Can throw your own custom error
-                    // You can also just return it, and let the call-site handle the error if necessary.
+                    sol::error err = pfr;
+                    std::cout << "OOPS! " << err.what() << std::endl;
                     return pfr;
                 });
 
@@ -223,6 +226,10 @@ int main(int argc, char* args[])
 
             Keyboard::keys[event.keyboard.keycode] = false;
 
+            break;
+        case ALLEGRO_EVENT_MOUSE_AXES:
+            Keyboard::mouse.x= event.mouse.x;
+            Keyboard::mouse.y= event.mouse.y;
             break;
         case ALLEGRO_EVENT_DISPLAY_CLOSE:
             done = true;

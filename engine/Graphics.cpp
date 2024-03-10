@@ -27,13 +27,9 @@ void Graphics::drawText(std::string text, float x, float y, Color &color, Font &
 
 void Graphics::drawImage(Image &img, float x, float y)
 {
-	al_draw_bitmap(img.bitmap, x, y, 0);  	
-}
-void Graphics::drawCropImage(Image &img, Rect &source, float x, float y)
-{
 	al_draw_tinted_scaled_rotated_bitmap_region(img.bitmap,
 		//clip dimentions
-		source.x,source.y,source.w,source.h,
+		img.crop.x,img.crop.y,img.crop.w,img.crop.h,
 		//tint
 		al_map_rgb(255,255,255),
 		//origin point
@@ -44,6 +40,22 @@ void Graphics::drawCropImage(Image &img, Rect &source, float x, float y)
 		1, 1, 
 		//angle and flags
 		0, 0);
+}
+void Graphics::drawRotatedImage(Image &img, float angle, Rect &origin, float x, float y)
+{
+	al_draw_tinted_scaled_rotated_bitmap_region(img.bitmap,
+		//clip dimentions
+		img.crop.x,img.crop.y,img.crop.w,img.crop.h,
+		//tint
+		al_map_rgb(255,255,255),
+		//origin point
+		origin.x,origin.y,
+		//position
+		x,y,
+		//scale
+		1, 1, 
+		//angle and flags
+		angle, 0);
 }
 
 void Graphics::pauseDraw(bool pause)
