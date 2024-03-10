@@ -34,4 +34,7 @@ When was any open ~sause~ source project ever finished?
 *  Run gxeruntime.exe
 *  Or just ask me to build it for you though [email](mailto:michealtheratz@courvix.com)
 
+##  Am I free to contribute?
+Of course you are! Just fork the repository and make your changes. After you are done make sure to make a pull request.
+
 
