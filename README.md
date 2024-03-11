@@ -14,6 +14,7 @@ At the current moment, yeah. It is basicly Love2d but diffrent. But I am hoping 
 When was any open ~sause~ source project ever finished?
 
 ##  Todo
+*  Tiled TMX or CSV loading
 *  Built in collision response 
 *  3d support (maybe)
 *  Actually good examples
