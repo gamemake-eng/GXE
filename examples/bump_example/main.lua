@@ -8,6 +8,9 @@ local bump = require 'bump'
 This shows how you can use libraies like BUMP in your games
 ]]
 function init(  )
+	font = GXE_Font.new()
+
+	cam = GXE_Camera.new(config.width, config.height)
 
 	playerRect = GXE_Rect.new(0,0,20,20)
 
@@ -24,7 +27,8 @@ function init(  )
 end
 
 function update( dt )
-	ax, ay, cols, len = world:move(playerBody, playerRect.x, playerRect.y)
+	cam:CenterTarget(playerRect, dt)
+	ax, ay, cols, len = world:move(playerBody, playerRect.x, playerRect.y, touch)
 	playerRect.x = ax
 	playerRect.y = ay
 
@@ -45,6 +49,9 @@ end
 
 function draw(  )
 	GXE_Graphics.ClearScreen(GXE_Color.MonogameBlue)
+	cam:Mount()
+	GXE_Graphics.DrawText("[Arrow keys] You should stop moving when touching the green square", 50, -10, GXE_Color.BloodShotRed, font)
 	GXE_Graphics.DrawRect(playerRect, GXE_Color.ReallyGreen)
 	GXE_Graphics.DrawRect(wallRect, GXE_Color.ReallyGreen)
+	cam:Unmount()
 end
