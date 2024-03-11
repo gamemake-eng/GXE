@@ -14,6 +14,7 @@
 #include "engine/Rect.h"
 #include "engine/Image.h"
 #include "engine/Viewport.h"
+#include "engine/Camera.h"
 #include <fstream>
 #include <assert.h>
 #include <iostream>
@@ -62,6 +63,14 @@ int main(int argc, char* args[])
     );
     lua.new_usertype<Viewport>("GXE_View",
         sol::constructors<Viewport(Rect)>()
+    );
+    lua.new_usertype<Camera>("GXE_Camera",
+        sol::constructors<Camera(float, float)>(),
+        "pos",&Camera::space,
+        "zoom",&Camera::zoom,
+        "Mount",&Camera::mount,
+        "Unmount",&Camera::unmount,
+        "CenterTarget",&Camera::centerOnTarget
     );
     lua.new_usertype<Color>("GXE_Color",
         sol::constructors<Color(float,float,float,float)>(),
