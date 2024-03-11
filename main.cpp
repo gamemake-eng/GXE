@@ -35,7 +35,9 @@ int main(int argc, char* args[])
     sol::state lua;
     lua.open_libraries(sol::lib::base, sol::lib::coroutine, sol::lib::string, sol::lib::io, sol::lib::math, sol::lib::table, sol::lib::debug, sol::lib::package, sol::lib::os); 
     std::string x = lua["package"]["path"];
+    std::string xx = lua["package"]["cpath"];
     lua["package"]["path"] = x + ";./?.lua";  
+    lua["package"]["cpath"] = xx + ";./?.dll;./?.dylib";  
     lua.new_usertype<Graphics>("GXE_Graphics",
         //TODO: Make sprite and geometric drawing (should be easy *foreshadowing maybe*)
         "ClearScreen", &Graphics::clearScreen,
