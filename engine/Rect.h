@@ -1,3 +1,4 @@
+#include <string>
 #pragma once
 class Rect
 {
@@ -11,5 +12,8 @@ public:
 	float h;
 
 	static bool checkCollision(Rect &a, Rect &b);
+	static std::string obstacleCollision(Rect &a, Rect &aspeed, Rect &b, Rect &bspeed);
+	static void obstacleSolidCollision(Rect &a, Rect &aspeed, Rect &b);
+
 	
 };

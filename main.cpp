@@ -13,6 +13,7 @@
 #include "engine/Keyboard.h"
 #include "engine/Rect.h"
 #include "engine/Image.h"
+#include "engine/Viewport.h"
 #include <fstream>
 #include <assert.h>
 #include <iostream>
@@ -31,7 +32,9 @@ int main(int argc, char* args[])
     int height = 480;
     std::string title = "GXE JellyFish";
     sol::state lua;
-    lua.open_libraries(sol::lib::base, sol::lib::coroutine, sol::lib::string, sol::lib::io, sol::lib::math, sol::lib::table, sol::lib::debug);   
+    lua.open_libraries(sol::lib::base, sol::lib::coroutine, sol::lib::string, sol::lib::io, sol::lib::math, sol::lib::table, sol::lib::debug, sol::lib::package, sol::lib::os); 
+    std::string x = lua["package"]["path"];
+    lua["package"]["path"] = x + ";./?.lua";  
     lua.new_usertype<Graphics>("GXE_Graphics",
         //TODO: Make sprite and geometric drawing (should be easy *foreshadowing maybe*)
         "ClearScreen", &Graphics::clearScreen,
@@ -39,11 +42,16 @@ int main(int argc, char* args[])
         "DrawRect", &Graphics::drawRect,
         //Holy ducking sit i could of just passed a refrence to the font object this whole time!?!?
         "DrawText", &Graphics::drawText,
+        "DrawFancyText", &Graphics::drawFancyText,
 
         "DrawImage", &Graphics::drawImage,
         "DrawRotatedImage", &Graphics::drawRotatedImage,
 
-        "PauseDraw", &Graphics::pauseDraw
+        "PauseDraw", &Graphics::pauseDraw,
+
+        "SetView", &Graphics::setViewport,
+        "RestoreView", &Graphics::restoreViewport,
+        "DrawView", &Graphics::drawView
     );
     lua.new_usertype<Transform>("GXE_Transform",
         sol::constructors<Transform()>(),
@@ -51,6 +59,9 @@ int main(int argc, char* args[])
         "Pop", &Transform::popTrans,
         "Translate", &Transform::translate,
         "Scale", &Transform::scale
+    );
+    lua.new_usertype<Viewport>("GXE_View",
+        sol::constructors<Viewport(Rect)>()
     );
     lua.new_usertype<Color>("GXE_Color",
         sol::constructors<Color(float,float,float,float)>(),
@@ -77,7 +88,9 @@ int main(int argc, char* args[])
         "y", &Rect::y,
         "w", &Rect::w,
         "h", &Rect::h,
-        "CheckAABB", &Rect::checkCollision
+        "CheckAABB", &Rect::checkCollision,
+        "MoveAndDetect", &Rect::obstacleCollision/*,
+        "MoveAndSeperate", &Rect::obstacleSolidCollision*/
     );
     lua.new_usertype<Keyboard>("GXE_Input",
         "KeyDown", &Keyboard::isKeyDown,
@@ -96,13 +109,7 @@ int main(int argc, char* args[])
         {   
             if (exists_test(fn))
             {
-                auto res = lua.script_file(fn,[](lua_State*, sol::protected_function_result pfr) {
-                    sol::error err = pfr;
-                    std::cout << "OOPS! " << err.what() << std::endl;
-                    return pfr;
-                });
-
-                assert(res.valid());
+                lua.script_file(fn);
             }else
             {
                 printf("\nfile does not exist");
@@ -121,15 +128,7 @@ int main(int argc, char* args[])
         
             if (exists_test(fn))
             {
-                auto res = lua.script_file(fn,[](lua_State*, sol::protected_function_result pfr) {
-                    // pfr will contain things that went wrong, for either loading or executing the script
-                    // Can throw your own custom error
-                    // You can also just return it, and let the call-site handle the error if necessary.
-
-                    return pfr;
-                });
-
-                assert(res.valid());
+                lua.script_file(fn);
 
             }else
             {
@@ -200,6 +199,8 @@ int main(int argc, char* args[])
 
     }
 
+    al_store_state(&Graphics::previous_state, ALLEGRO_STATE_TARGET_BITMAP);
+
     ALLEGRO_EVENT event;
     al_start_timer(app.timer);
 
@@ -230,6 +231,8 @@ int main(int argc, char* args[])
         case ALLEGRO_EVENT_MOUSE_AXES:
             Keyboard::mouse.x= event.mouse.x;
             Keyboard::mouse.y= event.mouse.y;
+            lua["GXE_Input"]["mouse"]["x"] = event.mouse.x;
+            lua["GXE_Input"]["mouse"]["y"] = event.mouse.y;
             break;
         case ALLEGRO_EVENT_DISPLAY_CLOSE:
             done = true;

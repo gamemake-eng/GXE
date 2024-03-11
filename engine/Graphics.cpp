@@ -1,7 +1,7 @@
 #include "Graphics.h"
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
-
+ALLEGRO_STATE Graphics::previous_state;
 Graphics::Graphics()
 {}
 
@@ -24,6 +24,11 @@ void Graphics::drawText(std::string text, float x, float y, Color &color, Font &
 {
 	al_draw_text(font.font, al_map_rgba(color.r,color.g,color.b,color.a), x, y, 0, text.c_str()); 
 }
+void Graphics::drawFancyText(std::string text,float x, float y, float maxwidth, Color &color, Font &font)
+{
+	al_draw_multiline_text(font.font, al_map_rgba(color.r,color.g,color.b,color.a), x, y, maxwidth, 29.2f, 0, text.c_str());
+}
+
 
 void Graphics::drawImage(Image &img, float x, float y)
 {
@@ -57,6 +62,20 @@ void Graphics::drawRotatedImage(Image &img, float angle, Rect &origin, float x, 
 		//angle and flags
 		angle, 0);
 }
+
+void Graphics::drawView(Viewport &img, float x, float y)
+{
+	al_draw_bitmap(img.view, x,y,0);
+}
+void Graphics::setViewport(Viewport &view)
+{
+	al_set_target_bitmap(view.view);
+}
+void Graphics::restoreViewport()
+{
+	al_restore_state(&previous_state);
+}
+
 
 void Graphics::pauseDraw(bool pause)
 {
