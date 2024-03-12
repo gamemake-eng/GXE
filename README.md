@@ -26,6 +26,7 @@ When was any open ~sause~ source project ever finished?
 *  Documentation
 *  ~Marry Jerma~
 *  Make a website
+*  Setup Xmake (Not cmake, [xmake](https://xmake.io/))
 
 ##  How to build
 *  First download [MINGW](https://sourceforge.net/projects/mingw/files/Installer/) with the lua lib and the [Allegro development binaries](https://liballeg.org/) for the compiler.
