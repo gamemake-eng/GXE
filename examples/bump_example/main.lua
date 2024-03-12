@@ -4,6 +4,7 @@ config = {
 	title = "Game engine maybe lol"
 }
 local bump = require 'bump'
+
 --[[
 This shows how you can use libraies like BUMP in your games
 ]]
@@ -23,7 +24,6 @@ function init(  )
 
 	world:add(playerBody, playerRect.x, playerRect.y, playerRect.w, playerRect.h)
 	world:add(wallBody, wallRect.x, wallRect.y, wallRect.w, wallRect.h)
-
 end
 
 function update( dt )
@@ -50,8 +50,10 @@ end
 function draw(  )
 	GXE_Graphics.ClearScreen(GXE_Color.MonogameBlue)
 	cam:Mount()
-	GXE_Graphics.DrawText("[Arrow keys] You should stop moving when touching the green square", 50, -10, GXE_Color.BloodShotRed, font)
 	GXE_Graphics.DrawRect(playerRect, GXE_Color.ReallyGreen)
 	GXE_Graphics.DrawRect(wallRect, GXE_Color.ReallyGreen)
 	cam:Unmount()
+
+	GXE_Graphics.DrawText("[Arrow keys] You should stop moving when touching the green square", 0, 0, GXE_Color.BloodShotRed, font)
+
 end
