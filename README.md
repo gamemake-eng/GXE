@@ -28,7 +28,7 @@ When was any open ~sause~ source project ever finished?
 *  Make a website
 
 ##  How to build
-*  First download MINGW and the [Allegro development binaries](https://liballeg.org/) for the compiler.
+*  First download [MINGW](https://sourceforge.net/projects/mingw/files/Installer/) with the lua lib and the [Allegro development binaries](https://liballeg.org/) for the compiler.
 *  Put allegro_monolinth.dll into the root directory
 *  Run make (or mingw32-make)
 *  Pray
