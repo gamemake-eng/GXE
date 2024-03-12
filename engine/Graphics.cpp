@@ -9,14 +9,19 @@ void Graphics::clearScreen(Color &color)
 {
 	al_clear_to_color(al_map_rgba(color.r,color.g,color.b,color.a));
 }
-void Graphics::drawCircle(float x, float y, float r, Color &color)
+void Graphics::drawCircle(Rect &pos, float r, Color &color)
 {
-	al_draw_filled_circle(x,y,r,al_map_rgba(color.r,color.g,color.b,color.a));
+	al_draw_filled_circle(pos.x,pos.y,r,al_map_rgba(color.r,color.g,color.b,color.a));
 }
 
 void Graphics::drawRect(Rect &rect, Color &color)
 {
 	al_draw_filled_rectangle(rect.x, rect.y, rect.x+rect.w, rect.y+rect.h, al_map_rgba(color.r, color.g, color.b, color.a));
+}
+
+void Graphics::drawLine(Rect &pos1, Rect &pos2, float w, Color &color)
+{
+	al_draw_line(pos1.x, pos1.y, pos2.x, pos2.y, al_map_rgba(color.r, color.g, color.b, color.a), w);
 }
 
 

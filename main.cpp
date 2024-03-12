@@ -43,6 +43,7 @@ int main(int argc, char* args[])
         "ClearScreen", &Graphics::clearScreen,
         "DrawCircle", &Graphics::drawCircle,
         "DrawRect", &Graphics::drawRect,
+        "DrawLine", &Graphics::drawLine,
         //Holy ducking sit i could of just passed a refrence to the font object this whole time!?!?
         "DrawText", &Graphics::drawText,
         "DrawFancyText", &Graphics::drawFancyText,

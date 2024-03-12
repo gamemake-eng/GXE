@@ -13,8 +13,10 @@ class Graphics
 {
 public:
 	static void clearScreen(Color &color);
-	static void drawCircle(float x, float y, float r, Color &color);
+	static void drawCircle(Rect &pos, float r, Color &color);
 	static void drawRect(Rect &rect, Color &color);
+	static void drawLine(Rect &pos1, Rect &pos2, float w,Color &color);
+
 	static void drawText(std::string text,float x, float y, Color &color, Font &font);
 	static void drawFancyText(std::string text,float x, float y, float maxwidth, Color &color, Font &font);
 
