@@ -18,12 +18,12 @@ When was any open ~sause~ source project ever finished?
 *  Built in collision response 
 *  3d support (maybe)
 *  Actually good examples
-*  More basic shape rendering
-*  Sound
+*  ~More basic shape rendering~
+*  Built in sound
 *  Windows build
 *  Actually good examples
 *  Wiki
-*  Documentation
+*  API Documentation
 *  ~Marry Jerma~
 *  Make a website
 *  Setup Xmake (Not cmake, [xmake](https://xmake.io/))
