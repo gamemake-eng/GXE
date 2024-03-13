@@ -7,7 +7,8 @@ fmod = require("fmodlua")
 --[[
 Made using FMOD Studio by Firelight Technologies Pty Ltd.
 
-NOTE: This uses a 
+NOTE: This uses a lua C module not included in the repo.
+You can get fmodlua here: https://github.com/gamemake-eng/FMOD-lua
 ]]--
 function init( )
 	
