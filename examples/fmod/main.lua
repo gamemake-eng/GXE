@@ -15,10 +15,11 @@ function init( )
 	fmod.Load()
 
 	fmod.Play("music.wav")
+	font = GXE_Font.new()
 end
 
 function update(dt)
-	font = GXE_Font.new()
+	
 end
 
 function draw( )
