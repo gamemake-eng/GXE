@@ -18,6 +18,7 @@ function script_path()
 end
 str = "Hello there! Welcome to GXE!"
 function init( )
+	
 	camTrans = GXE_Transform.new()
 	font = GXE_Font.new("lazy.ttf", 20)
 	font2 = GXE_Font.new("lovedays.ttf", 20)

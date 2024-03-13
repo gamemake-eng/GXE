@@ -272,6 +272,13 @@ int main(int argc, char* args[])
         }
     }
 
+    sol::optional<sol::function> exitDef = lua["exit"];
+    if(!(exitDef == sol::nullopt))
+    {
+        lua["exit"]();
+
+    }
+
     
 
     
