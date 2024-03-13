@@ -18,12 +18,12 @@ function init( )
 end
 
 function update(dt)
-	font3 = GXE_Font.new()
+	font = GXE_Font.new()
 end
 
 function draw( )
 	GXE_Graphics.ClearScreen(GXE_Color.MonogameBlue)
-	GXE_Graphics.DrawText("You should be hearing some nice music!", 0, 0,GXE_Color.ReallyGreen, font2)
+	GXE_Graphics.DrawText("You should be hearing some nice music!", 0, 0,GXE_Color.ReallyGreen, font)
 end
 
 function exit(  )
