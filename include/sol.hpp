@@ -1942,7 +1942,8 @@ namespace sol {
 #define KEPLER_PROJECT_COMPAT53_H_
 
 #include <stddef.h>
-#include <limits.h>
+//#include <limits.h>
+#include <limits>
 #include <string.h>
 #if defined(__cplusplus) && !defined(COMPAT53_LUA_CPP)
 extern "C" {
@@ -5147,7 +5148,6 @@ namespace sol {
 		runtime = LUA_ERRRUN,
 		memory = LUA_ERRMEM,
 		handler = LUA_ERRERR,
-		gc = LUA_ERRGCMM,
 		syntax = LUA_ERRSYNTAX,
 		file = LUA_ERRFILE,
 	};
@@ -5157,7 +5157,6 @@ namespace sol {
 		yielded = LUA_YIELD,
 		runtime = LUA_ERRRUN,
 		memory = LUA_ERRMEM,
-		gc = LUA_ERRGCMM,
 		handler = LUA_ERRERR,
 		dead = -1,
 	};
@@ -5166,7 +5165,6 @@ namespace sol {
 		ok = LUA_OK,
 		syntax = LUA_ERRSYNTAX,
 		memory = LUA_ERRMEM,
-		gc = LUA_ERRGCMM,
 		file = LUA_ERRFILE,
 	};
 
@@ -5193,7 +5191,6 @@ namespace sol {
 			"runtime",
 			"memory",
 			"handler",
-			"gc",
 			"syntax",
 			"file",
 			"CRITICAL_EXCEPTION_FAILURE",
@@ -5209,12 +5206,10 @@ namespace sol {
 			return names[3];
 		case call_status::handler:
 			return names[4];
-		case call_status::gc:
-			return names[5];
 		case call_status::syntax:
-			return names[6];
+			return names[5];
 		case call_status::file:
-			return names[7];
+			return names[6];
 		}
 		if (static_cast<std::ptrdiff_t>(c) == -1) {
 			// One of the many cases where a critical exception error has occurred
@@ -5230,7 +5225,6 @@ namespace sol {
 		case call_status::runtime:
 		case call_status::memory:
 		case call_status::handler:
-		case call_status::gc:
 		case call_status::syntax:
 		case call_status::file:
 			return false;
@@ -5241,7 +5235,6 @@ namespace sol {
 	inline const std::string& to_string(load_status c) {
 		static const std::array<std::string, 7> names{ { "ok",
 			"memory",
-			"gc",
 			"syntax",
 			"file",
 			"CRITICAL_EXCEPTION_FAILURE",
@@ -5251,12 +5244,10 @@ namespace sol {
 			return names[0];
 		case load_status::memory:
 			return names[1];
-		case load_status::gc:
-			return names[2];
 		case load_status::syntax:
-			return names[3];
+			return names[2];
 		case load_status::file:
-			return names[4];
+			return names[3];
 		}
 		if (static_cast<int>(c) == -1) {
 			// One of the many cases where a critical exception error has occurred
@@ -10326,6 +10317,8 @@ namespace stack {
 
 // beginning of sol/stack_push.hpp
 
+#include <stddef.h>
+//#include <limits.h>
 #include <limits>
 #if defined(SOL_CXX17_FEATURES) && SOL_CXX17_FEATURES
 #if defined(SOL_STD_VARIANT) && SOL_STD_VARIANT

@@ -3,14 +3,15 @@ CXXFLAGS = -Wall -std=c++17 -Iinclude -Iengine
 CXXFLAGSD = -g
 OBJS := $(patsubst %.cpp,%.o,$(wildcard *.cpp)) $(patsubst %.cpp,%.o,$(wildcard engine/*.cpp))
 SRC := $(patsubst %.o,%.cpp,$(OBJS))
-#LIBS = -lallegro.dll -lallegro_primitives.dll -lallegro_font.dll -lallegro_ttf.dll -lallegro_image.dll -lallegro_audio.dll -lallegro_acodec.dll -lfreetype.dll -llua
-LIBS = -lallegro_monolith.dll -llua
-LIBSD = -lallegro-debug.dll -lallegro_primitives-debug.dll -lallegro_font-debug.dll -lallegro_image-debug.dll -lallegro_audio-debug.dll -lallegro_acodec-debug.dll -llua
+LIBS = -lallegro -lallegro_primitives -lallegro_font -lallegro_ttf -lallegro_image -lallegro_audio -lallegro_acodec -lfreetype -llua
+#LIBS = -lallegro_ -llua
+LIBSD = -lallegro-debug -lallegro_primitives-debug -lallegro_font-debug -lallegro_image-debug -lallegro_audio-debug -lallegro_acodec-debug -llua
 NAME = gxeruntime
 OUTPATH = .
 build: $(OBJS)
-	$(CXX) -w -Wl,-subsystem,windows  -o $(OUTPATH)\$(NAME).exe $(OBJS) -static-libstdc++ $(LIBS)
+	$(CXX) -o $(OUTPATH)/$(NAME) $(OBJS) $(LIBS)
 clean:
-	del $(OBJS)
+	rm -f $(OBJS)
 run:
-	$(OUTPATH)\$(NAME).exe
+	$(OUTPATH)/$(NAME)
+
