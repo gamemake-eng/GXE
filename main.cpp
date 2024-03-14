@@ -112,7 +112,11 @@ int main(int argc, char* args[])
         "KEY_UP", sol::var(Keyboard::KEY_UP),
         "KEY_DOWN", sol::var(Keyboard::KEY_DOWN),
         "KEY_LEFT", sol::var(Keyboard::KEY_LEFT),
-        "KEY_RIGHT", sol::var(Keyboard::KEY_RIGHT)
+        "KEY_RIGHT", sol::var(Keyboard::KEY_RIGHT),
+        "KEY_W", sol::var(Keyboard::KEY_W),
+        "KEY_A", sol::var(Keyboard::KEY_A),
+        "KEY_S", sol::var(Keyboard::KEY_S),
+        "KEY_D", sol::var(Keyboard::KEY_D)
     );
     if (!(args[1] == NULL))
     {

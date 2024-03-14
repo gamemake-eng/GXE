@@ -11,6 +11,11 @@ public:
 	static const int KEY_DOWN;
 	static const int KEY_LEFT;
 	static const int KEY_RIGHT;
+	static const int KEY_W;
+	static const int KEY_A;
+	static const int KEY_S;
+	static const int KEY_D;
+
 
 	static Rect mouse;
 	

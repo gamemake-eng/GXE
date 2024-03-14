@@ -157,6 +157,7 @@ function drawgame(c)
 		GXE_Graphics.DrawText(v.char, v.x, v.y+30,c, font2)
 		GXE_Graphics.DrawText(v.char, v.x, v.y+60,c, font3)
 	end
+	
 	GXE_Graphics.PauseDraw(false)
 
 	camTrans:Pop()
