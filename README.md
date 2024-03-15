@@ -29,12 +29,12 @@ When was any open ~sause~ source project ever finished?
 *  Setup Xmake (Not cmake, [xmake](https://xmake.io/))
 
 ##  How to build
-*  First download [MINGW](https://sourceforge.net/projects/mingw/files/Installer/) with the lua lib and the [Allegro development binaries](https://liballeg.org/) for the compiler.
+*  First download [MINGW](https://sourceforge.net/projects/mingw/files/Installer/), the [lua C lib](https://luabinaries.sourceforge.net/download.html), and the [Allegro development binaries](https://liballeg.org/) for the compiler.
+*  If needed put the dev files in their respective folder
 *  Put allegro_monolinth.dll into the root directory
 *  Run make (or mingw32-make)
-*  Pray
-*  Run gxeruntime.exe
-*  Or just ask me to build it for you though [email](mailto:michealtheratz@courvix.com)
+*  Run the executable
+*  Or just ask me to build it for you though [email](mailto:michealtheratz@courvix.com) if you are lazy
 
 ##  Big thanks
 Big thanks to [@TKperson](https://github.com/TKperson) for helping with linux support!
