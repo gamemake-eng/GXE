@@ -228,11 +228,8 @@ int main(int argc, char* args[])
 
         switch(event.type) {
         case ALLEGRO_EVENT_TIMER:
-            lua["update"](deltaTime);
             redraw = true;
-            currentTime = al_get_time();
-            deltaTime = currentTime - lastUpdate;
-            lastUpdate = currentTime;
+            
             
             break;
         case ALLEGRO_EVENT_KEY_DOWN:
@@ -266,11 +263,16 @@ int main(int argc, char* args[])
         if(redraw && al_is_event_queue_empty(app.queue))
         {
 
-
+            lua["update"](deltaTime);
+            currentTime = al_get_time();
+            deltaTime = currentTime - lastUpdate;
+            lastUpdate = currentTime;
             
             lua["draw"]();
 
             al_flip_display();
+
+
 
             redraw = false;
         }

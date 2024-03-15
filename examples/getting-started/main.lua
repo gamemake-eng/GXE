@@ -7,6 +7,7 @@ config = {
 function init(  )
 	rect = GXE_Rect.new(0,0,32,32)
 	speed = GXE_Rect.new(0,0)
+
 	walk_speed = 200
 end
 
