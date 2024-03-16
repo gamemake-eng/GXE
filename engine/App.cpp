@@ -19,6 +19,7 @@ App::App(const char* title, int w, int h)
 
 
 	display = al_create_display(w,h);
+	al_set_window_title(display, title);
 	queue = al_create_event_queue();
 	timer = al_create_timer(1.0 / 60);
 	voice = al_create_voice(44100, ALLEGRO_AUDIO_DEPTH_INT16, ALLEGRO_CHANNEL_CONF_2);

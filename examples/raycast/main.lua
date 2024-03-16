@@ -1,7 +1,7 @@
 config = {
 	width = 600,
 	height = 600,
-	title = "Game!"
+	title = "Raycast example!"
 }
 ray = require("ray")
 --[[
