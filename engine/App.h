@@ -1,7 +1,7 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
-#include <stdio.h>
+
 #include "Game.h"
 #include "../include/sol.hpp"
 #pragma once

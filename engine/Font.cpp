@@ -1,5 +1,5 @@
 #include "Font.h"
-#include <stdio.h>
+
 Font::Font()
 {
 	font = al_create_builtin_font();
@@ -11,6 +11,6 @@ Font::Font(std::string path, int size)
 
 Font::~Font()
 {
-	printf("\ndestroying font");
+	//printf("\ndestroying font");
 	al_destroy_font(font);
 }

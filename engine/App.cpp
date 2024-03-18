@@ -5,7 +5,7 @@
 #include <allegro5/allegro_ttf.h>
 App::App(const char* title, int w, int h)
 {
-	printf("\nGXE VERSION JELLYFISH");
+	
 	al_init();
 	al_install_keyboard();
 	al_install_mouse();
@@ -35,7 +35,7 @@ App::App(const char* title, int w, int h)
 
 App::~App()
 {
-	printf("\nExiting...");
+	
 	al_destroy_display(display);
 	display = NULL;
 	al_destroy_timer(timer);

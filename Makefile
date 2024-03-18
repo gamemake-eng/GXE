@@ -1,11 +1,11 @@
 CXX = g++
-CXXFLAGS = -Wall -std=c++17 -Iinclude -Iengine
+CXXFLAGS = -Wall -Iinclude -Iengine
 CXXFLAGSD = -g
 OBJS := $(patsubst %.cpp,%.o,$(wildcard *.cpp)) $(patsubst %.cpp,%.o,$(wildcard engine/*.cpp))
 SRC := $(patsubst %.o,%.cpp,$(OBJS))
 
 ifeq ($(OS),Windows_NT)
-    LIBS = -lallegro_monolith -llua
+    LIBS = -static-libstdc++ -lallegro_monolith -llua
 		EXE_SUFFIX = .exe
 else
     # Linux or MacOS specific settings 
