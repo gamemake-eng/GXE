@@ -24,7 +24,6 @@ When was any open ~sause~ source project ever finished?
 *  Actually good examples
 *  Wiki
 *  API Documentation
-*  ~Marry Jerma~
 *  Make a website
 *  Setup Xmake (Not cmake, [xmake](https://xmake.io/))
 
