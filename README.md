@@ -1,3 +1,4 @@
+# DEAD!!!!
 <p align="center">
   <img src="https://github.com/gamemake-eng/GXE/blob/main/img/logo.png?raw=true" alt="Gee ex e logo"/>
 </p>
