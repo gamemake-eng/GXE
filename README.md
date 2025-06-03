@@ -2,6 +2,8 @@
   <img src="https://github.com/gamemake-eng/GXE/blob/main/img/logo.png?raw=true" alt="Gee ex e logo"/>
 </p>
 
+# This project is pretty much dead. Just use love 2D.
+
 #  The Game eXperience Engine: A simple game framework
 
 ##  What is this?
